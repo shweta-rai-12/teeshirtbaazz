@@ -1,0 +1,100 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f8f8fb;
+  color: #222;
+}
+
+.app-shell {
+  min-height: 100vh;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  background: #292b7a;
+  color: #fff;
+}
+
+.navbar .links a,
+.navbar button {
+  margin-left: 12px;
+  color: #fff;
+  text-decoration: none;
+}
+
+.navbar button {
+  background: transparent;
+  border: 1px solid #fff;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+main {
+  padding: 24px;
+}
+
+.page {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.card,
+.cart-item {
+  border: 1px solid #d3d3d3;
+  border-radius: 8px;
+  padding: 16px;
+  background: #fff;
+  margin-bottom: 16px;
+}
+
+.grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+input,
+textarea {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button {
+  background: #292b7a;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.error,
+.notice,
+.answer {
+  margin-top: 12px;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.error {
+  background: #ffe6e6;
+  color: #a00;
+}
+
+.notice,
+.answer {
+  background: #e8f0ff;
+  color: #0c3d91;
+}

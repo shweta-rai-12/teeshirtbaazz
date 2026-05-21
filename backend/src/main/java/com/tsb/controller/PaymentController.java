@@ -9,14 +9,5 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/payments")
 public class PaymentController {
-    private final PaymentService paymentService;
 
-    public PaymentController(PaymentService paymentService) {
-        this.paymentService = paymentService;
-    }
-
-    @PostMapping
-    public ResponseEntity<Payment> processPayment(@RequestBody PaymentRequest request) {
-        return ResponseEntity.ok(paymentService.processPayment(request));
-    }
 }

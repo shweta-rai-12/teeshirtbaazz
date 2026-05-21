@@ -14,37 +14,5 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class AuthService {
-    private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
-    private final AuthenticationManager authenticationManager;
-    private final JwtTokenUtil jwtTokenUtil;
 
-    public AuthService(UserRepository userRepository,
-                       PasswordEncoder passwordEncoder,
-                       AuthenticationManager authenticationManager,
-                       JwtTokenUtil jwtTokenUtil) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.authenticationManager = authenticationManager;
-        this.jwtTokenUtil = jwtTokenUtil;
-    }
-
-    public AuthResponse register(RegisterRequest request) {
-        if (userRepository.findByEmail(request.getEmail()).isPresent()) {
-            throw new IllegalArgumentException("Email is already registered");
-        }
-        User user = new User(request.getName(), request.getEmail(), passwordEncoder.encode(request.getPassword()), Role.ROLE_USER);
-        userRepository.save(user);
-
-        String token = jwtTokenUtil.generateToken(user.getEmail(), user.getRole());
-        return new AuthResponse(token, user.getEmail(), user.getName(), user.getRole().name());
-    }
-
-    public AuthResponse login(AuthRequest request) {
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
-        User user = userRepository.findByEmail(request.getEmail())
-                .orElseThrow(() -> new IllegalArgumentException("Invalid credentials"));
-        String token = jwtTokenUtil.generateToken(user.getEmail(), user.getRole());
-        return new AuthResponse(token, user.getEmail(), user.getName(), user.getRole().name());
-    }
 }

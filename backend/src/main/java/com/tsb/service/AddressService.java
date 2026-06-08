@@ -26,11 +26,16 @@ public class AddressService {
 
     @Transactional
     public Address create(String userEmail, AddressRequest request) {
+        User owner = user(userEmail);
+        boolean firstAddress = addressRepository.findByUser(owner).isEmpty();
         Address address = new Address();
-        address.setUser(user(userEmail));
+        address.setUser(owner);
         apply(address, request);
+        if (firstAddress) {
+            address.setDefaultAddress(true);
+        }
         Address saved = addressRepository.save(address);
-        if (Boolean.TRUE.equals(saved.getDefaultAddress())) {
+        if (Boolean.TRUE.equals(saved.getDefaultAddress()) && saved.getId() != null) {
             setDefault(userEmail, saved.getId());
         }
         return saved;
@@ -41,7 +46,7 @@ public class AddressService {
         Address address = ownedAddress(userEmail, id);
         apply(address, request);
         Address saved = addressRepository.save(address);
-        if (Boolean.TRUE.equals(saved.getDefaultAddress())) {
+        if (Boolean.TRUE.equals(saved.getDefaultAddress()) && saved.getId() != null) {
             setDefault(userEmail, saved.getId());
         }
         return saved;
@@ -60,7 +65,13 @@ public class AddressService {
     }
 
     public void delete(String userEmail, Long id) {
-        addressRepository.delete(ownedAddress(userEmail, id));
+        Address address = ownedAddress(userEmail, id);
+        boolean wasDefault = Boolean.TRUE.equals(address.getDefaultAddress());
+        addressRepository.delete(address);
+        List<Address> remaining = addressRepository.findByUser(user(userEmail));
+        if (wasDefault && !remaining.isEmpty()) {
+            setDefault(userEmail, remaining.get(0).getId());
+        }
     }
 
     public Address ownedAddress(String userEmail, Long id) {

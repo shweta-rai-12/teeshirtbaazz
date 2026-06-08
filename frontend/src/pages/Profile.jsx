@@ -13,52 +13,111 @@ const blankAddress = {
   defaultAddress: false,
 };
 
+const labels = {
+  fullName: 'Full name',
+  phone: 'Phone',
+  line1: 'Address line 1',
+  line2: 'Address line 2',
+  city: 'City',
+  state: 'State',
+  postalCode: 'Postal code',
+  country: 'Country',
+};
+
 function Profile() {
   const [profile, setProfile] = useState(null);
   const [name, setName] = useState('');
   const [addresses, setAddresses] = useState([]);
   const [form, setForm] = useState(blankAddress);
+  const [editingId, setEditingId] = useState(null);
   const [message, setMessage] = useState('');
 
-  const load = () => {
-    api.get('/users/me').then((resp) => {
-      setProfile(resp.data);
-      setName(resp.data.name || '');
-    });
-    api.get('/addresses').then((resp) => setAddresses(resp.data));
+  const load = async () => {
+    try {
+      const [profileResp, addressResp] = await Promise.all([
+        api.get('/users/me'),
+        api.get('/addresses'),
+      ]);
+      setProfile(profileResp.data);
+      setName(profileResp.data.name || '');
+      setAddresses(addressResp.data);
+    } catch (err) {
+      setMessage(err.response?.data?.message || 'Unable to load profile.');
+    }
   };
 
-  useEffect(load, []);
+  useEffect(() => {
+    load();
+  }, []);
 
   const updateProfile = async (event) => {
     event.preventDefault();
-    const resp = await api.put('/users/me', { name });
-    setProfile(resp.data);
-    const stored = JSON.parse(localStorage.getItem('tsb_user') || '{}');
-    localStorage.setItem('tsb_user', JSON.stringify({ ...stored, name: resp.data.name }));
-    setMessage('Profile updated.');
+    try {
+      const resp = await api.put('/users/me', { name });
+      setProfile(resp.data);
+      const stored = JSON.parse(localStorage.getItem('tsb_user') || '{}');
+      localStorage.setItem('tsb_user', JSON.stringify({ ...stored, name: resp.data.name }));
+      setMessage('Profile updated.');
+    } catch (err) {
+      setMessage(err.response?.data?.message || 'Unable to update profile.');
+    }
   };
 
   const saveAddress = async (event) => {
     event.preventDefault();
     try {
-      await api.post('/addresses', form);
-      setForm(blankAddress);
-      setMessage('Address saved.');
+      if (editingId) {
+        await api.put(`/addresses/${editingId}`, form);
+        setMessage('Address updated.');
+      } else {
+        await api.post('/addresses', form);
+        setMessage('Address saved.');
+      }
+      resetAddressForm();
       load();
     } catch (err) {
       setMessage(err.response?.data?.message || 'Unable to save address.');
     }
   };
 
+  const startEdit = (address) => {
+    setEditingId(address.id);
+    setForm({
+      fullName: address.fullName || '',
+      phone: address.phone || '',
+      line1: address.line1 || '',
+      line2: address.line2 || '',
+      city: address.city || '',
+      state: address.state || '',
+      postalCode: address.postalCode || '',
+      country: address.country || 'India',
+      defaultAddress: Boolean(address.defaultAddress),
+    });
+  };
+
+  const resetAddressForm = () => {
+    setEditingId(null);
+    setForm(blankAddress);
+  };
+
   const setDefault = async (id) => {
-    await api.put(`/addresses/${id}/default`);
-    load();
+    try {
+      await api.put(`/addresses/${id}/default`);
+      setMessage('Default address updated.');
+      load();
+    } catch (err) {
+      setMessage(err.response?.data?.message || 'Unable to update default address.');
+    }
   };
 
   const deleteAddress = async (id) => {
-    await api.delete(`/addresses/${id}`);
-    load();
+    try {
+      await api.delete(`/addresses/${id}`);
+      setMessage('Address deleted.');
+      load();
+    } catch (err) {
+      setMessage(err.response?.data?.message || 'Unable to delete address.');
+    }
   };
 
   return (
@@ -84,6 +143,7 @@ function Profile() {
               {address.defaultAddress && <span className="status">Default</span>}
             </div>
             <div className="actions">
+              <button className="secondary" onClick={() => startEdit(address)}>Edit</button>
               <button className="secondary" onClick={() => setDefault(address.id)}>Make Default</button>
               <button className="danger" onClick={() => deleteAddress(address.id)}>Delete</button>
             </div>
@@ -92,15 +152,21 @@ function Profile() {
       </div>
 
       <form onSubmit={saveAddress} className="panel">
-        <h2>Add Address</h2>
+        <h2>{editingId ? 'Edit Address' : 'Add Address'}</h2>
         {Object.keys(blankAddress).filter((key) => key !== 'defaultAddress').map((key) => (
-          <input key={key} placeholder={key} value={form[key]} onChange={(e) => setForm({ ...form, [key]: e.target.value })} />
+          <label key={key}>
+            {labels[key]}
+            <input value={form[key]} onChange={(e) => setForm({ ...form, [key]: e.target.value })} required={!['line2'].includes(key)} />
+          </label>
         ))}
         <label className="checkbox-row">
           <input type="checkbox" checked={form.defaultAddress} onChange={(e) => setForm({ ...form, defaultAddress: e.target.checked })} />
           Set as default
         </label>
-        <button>Save Address</button>
+        <div className="actions">
+          <button>{editingId ? 'Update Address' : 'Save Address'}</button>
+          {editingId && <button type="button" className="secondary" onClick={resetAddressForm}>Cancel</button>}
+        </div>
         {message && <div className="notice">{message}</div>}
       </form>
     </section>

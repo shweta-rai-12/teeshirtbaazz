@@ -5,98 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b3e265b0-d595-466b-9d28-e9cea94af541" name="Changes" comment="Structure of the project">
-      <change afterPath="$PROJECT_DIR$/.env.example" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/TeeShirtBaazz.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/.idea/dataSources.local.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/.idea/dataSources/f087b548-6881-4e34-8ab8-5475fbcd51fc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/.idea/dataSources/f087b548-6881-4e34-8ab8-5475fbcd51fc/storage_v2/_src_/schema/information_schema.FNRwLQ.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/.idea/dataSources/f087b548-6881-4e34-8ab8-5475fbcd51fc/storage_v2/_src_/schema/mysql.osA4Bg.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/.idea/dataSources/f087b548-6881-4e34-8ab8-5475fbcd51fc/storage_v2/_src_/schema/performance_schema.kIw0nw.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/.idea/dataSources/f087b548-6881-4e34-8ab8-5475fbcd51fc/storage_v2/_src_/schema/sys.zb4BAA.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/tsb/config/DemoDataConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/tsb/controller/AddressController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/tsb/controller/AdminController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/tsb/controller/UserController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/tsb/dto/AddressRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/tsb/dto/FaqItemRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/tsb/dto/UserProfileRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/tsb/model/Address.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/tsb/model/FaqItem.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/tsb/repository/AddressRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/tsb/repository/FaqItemRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/tsb/service/AddressService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/tsb/service/FaqService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/tsb/service/UserService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/test/java/com/tsb/service/CartServiceTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/test/java/com/tsb/service/ProductServiceTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/target/classes/com/tsb/config/RestExceptionHandler.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/projectPlan.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/.idea/frontend.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/nginx.conf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/pages/Admin.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/pages/Checkout.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/pages/ProductDetail.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/pages/Profile.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/pages/Returns.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.github/workflows/ci-cd.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/ci-cd.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/tsb/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/tsb/config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/tsb/controller/CartController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/tsb/controller/CartController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/tsb/controller/CustomOrderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/tsb/controller/CustomOrderController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/tsb/controller/OrderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/tsb/controller/OrderController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/tsb/controller/PaymentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/tsb/controller/PaymentController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/tsb/controller/ProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/tsb/controller/ProductController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/tsb/controller/ReturnController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/tsb/controller/ReturnController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/tsb/dto/CustomOrderRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/tsb/dto/CustomOrderRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/tsb/dto/OrderRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/tsb/dto/OrderRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/tsb/dto/PaymentRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/tsb/dto/PaymentRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/tsb/dto/ProductDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/tsb/dto/ProductDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/tsb/model/Cart.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/tsb/model/Cart.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/tsb/model/CartItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/tsb/model/CartItem.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/tsb/model/CustomOrder.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/tsb/model/CustomOrder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/tsb/model/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/tsb/model/Order.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/tsb/model/Payment.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/tsb/model/Payment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/tsb/model/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/tsb/model/Product.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/tsb/model/ReturnRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/tsb/model/ReturnRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/tsb/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/tsb/model/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/tsb/repository/PaymentRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/tsb/repository/PaymentRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/tsb/service/CartService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/tsb/service/CartService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/tsb/service/ChatService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/tsb/service/ChatService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/tsb/service/CustomOrderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/tsb/service/CustomOrderService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/tsb/service/OrderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/tsb/service/OrderService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/tsb/service/PaymentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/tsb/service/PaymentService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/tsb/service/ProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/tsb/service/ProductService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/tsb/service/ReturnService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/tsb/service/ReturnService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/Navbar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Navbar.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/index.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/Cart.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/Cart.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/CustomOrder.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/CustomOrder.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/Home.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/Home.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/Login.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/Login.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/Orders.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/Orders.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/Products.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/Products.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/Register.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/Register.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/tsb/service/AddressService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/tsb/service/AddressService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/Profile.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/Profile.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/services/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/services/api.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -154,6 +66,65 @@
   <component name="McpProjectServerCommands">
     <commands />
     <urls />
+  </component>
+  <component name="NextEditCompletionFeaturesState">
+    <decayedCancelled>
+      <entry key="MS100" value="1.5625292423444046" />
+      <entry key="MS500" value="1.8913104958969735" />
+      <entry key="S2" value="1.9722747833240353" />
+      <entry key="S5" value="2.1477097434912618" />
+      <entry key="S10" value="3.368215285842578" />
+      <entry key="S30" value="9.762006561022218" />
+      <entry key="S60" value="14.616251659015761" />
+      <entry key="M2" value="18.227453768534165" />
+      <entry key="M5" value="20.928232213386433" />
+      <entry key="M10" value="21.934748583879152" />
+      <entry key="M15" value="22.283128309446887" />
+      <entry key="M30" value="22.638166411689138" />
+      <entry key="H1" value="22.81822508423615" />
+      <entry key="H2" value="22.90889691566159" />
+      <entry key="H4" value="22.95439441355915" />
+      <entry key="D1" value="22.992391551063413" />
+      <entry key="W1" value="22.99891289445946" />
+    </decayedCancelled>
+    <decayedSelected>
+      <entry key="MS100" value="7.184892852606574E-70" />
+      <entry key="MS500" value="1.483620088957499E-14" />
+      <entry key="S2" value="3.8289305212537046E-4" />
+      <entry key="S5" value="0.057707512966193975" />
+      <entry key="S10" value="0.3311529589778278" />
+      <entry key="S30" value="1.0917077729251095" />
+      <entry key="S60" value="1.4765250539713792" />
+      <entry key="M2" value="1.7181198498721832" />
+      <entry key="M5" value="1.882000368640686" />
+      <entry key="M10" value="1.9400886297742055" />
+      <entry key="M15" value="1.9598536859234512" />
+      <entry key="M30" value="1.9798234250062852" />
+      <entry key="H1" value="1.9898857225586353" />
+      <entry key="H2" value="1.994936346782496" />
+      <entry key="H4" value="1.9974665426357654" />
+      <entry key="D1" value="1.999577530431018" />
+      <entry key="W1" value="1.999939641650845" />
+    </decayedSelected>
+    <decayedShown>
+      <entry key="MS100" value="1.5198017980426552" />
+      <entry key="MS500" value="1.8808518678680886" />
+      <entry key="S2" value="1.9698099303256613" />
+      <entry key="S5" value="2.1960089811463774" />
+      <entry key="S10" value="3.6726329989837985" />
+      <entry key="S30" value="10.816739336390352" />
+      <entry key="S60" value="16.06413107272056" />
+      <entry key="M2" value="19.92740181768552" />
+      <entry key="M5" value="22.801791578987203" />
+      <entry key="M10" value="23.870395895011498" />
+      <entry key="M15" value="24.23996996150972" />
+      <entry key="M30" value="24.616457700311933" />
+      <entry key="H1" value="24.807338105063458" />
+      <entry key="H2" value="24.903445240052513" />
+      <entry key="H4" value="24.951666525463555" />
+      <entry key="D1" value="24.991936617962768" />
+      <entry key="W1" value="24.998847897030636" />
+    </decayedShown>
   </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
@@ -215,7 +186,7 @@
       <workItem from="1778929271463" duration="2782000" />
       <workItem from="1778947732377" duration="2030000" />
       <workItem from="1779359962766" duration="3775000" />
-      <workItem from="1780915863205" duration="2897000" />
+      <workItem from="1780915863205" duration="3582000" />
     </task>
     <task id="LOCAL-00001" summary="Structure of the project">
       <option name="closed" value="true" />
@@ -241,7 +212,15 @@
       <option name="project" value="LOCAL" />
       <updated>1778947758667</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Structure of the project">
+      <option name="closed" value="true" />
+      <created>1780921784250</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1780921784250</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

@@ -19,4 +19,14 @@ public class PaymentController {
     public ResponseEntity<Payment> processPayment(@RequestBody PaymentRequest request) {
         return ResponseEntity.ok(paymentService.processPayment(request));
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Payment> getPayment(@PathVariable Long id) {
+        return ResponseEntity.ok(paymentService.getPayment(id));
+    }
+
+    @GetMapping("/order/{orderId}")
+    public ResponseEntity<Payment> getPaymentByOrder(@PathVariable Long orderId) {
+        return ResponseEntity.ok(paymentService.getPaymentByOrder(orderId));
+    }
 }

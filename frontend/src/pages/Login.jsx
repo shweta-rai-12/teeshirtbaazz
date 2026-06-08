@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import api from '../services/api';
+import api, { saveSession } from '../services/api';
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -12,7 +12,7 @@ function Login() {
     event.preventDefault();
     try {
       const response = await api.post('/auth/login', { email, password });
-      localStorage.setItem('tsb_token', response.data.token);
+      saveSession(response.data);
       navigate('/products');
     } catch (err) {
       setError(err.response?.data?.message || 'Login failed');

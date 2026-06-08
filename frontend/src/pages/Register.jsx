@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import api from '../services/api';
+import api, { saveSession } from '../services/api';
 
 function Register() {
   const [name, setName] = useState('');
@@ -12,8 +12,9 @@ function Register() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      await api.post('/auth/register', { name, email, password });
-      navigate('/login');
+      const response = await api.post('/auth/register', { name, email, password });
+      saveSession(response.data);
+      navigate('/products');
     } catch (err) {
       setMessage(err.response?.data?.message || 'Registration failed');
     }

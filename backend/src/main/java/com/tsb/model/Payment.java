@@ -15,6 +15,7 @@ public class Payment {
     private String method;
     private String status;
     private String transactionId;
+    private String failureReason;
     private Double amount;
 
     public Payment() {
@@ -62,5 +63,13 @@ public class Payment {
 
     public void setAmount(Double amount) {
         this.amount = amount;
+    }
+
+    public String getFailureReason() {
+        return failureReason;
+    }
+
+    public void setFailureReason(String failureReason) {
+        this.failureReason = failureReason;
     }
 }

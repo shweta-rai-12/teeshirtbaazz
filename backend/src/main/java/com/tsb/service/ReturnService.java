@@ -29,6 +29,12 @@ public class ReturnService {
     public ReturnRequest submitRequest(String userEmail, ReturnRequestDto requestDto) {
         User user = userRepository.findByEmail(userEmail).orElseThrow(() -> new IllegalArgumentException("User not found"));
         Order order = orderRepository.findById(requestDto.getOrderId()).orElseThrow(() -> new IllegalArgumentException("Order not found"));
+        if (!order.getUser().getId().equals(user.getId())) {
+            throw new IllegalArgumentException("Order not found");
+        }
+        if (!List.of("CONFIRMED", "SHIPPED", "DELIVERED").contains(order.getStatus())) {
+            throw new IllegalArgumentException("Return is available only after a confirmed order");
+        }
 
         ReturnRequest request = new ReturnRequest();
         request.setUser(user);
@@ -44,10 +50,23 @@ public class ReturnService {
         return returnRequestRepository.findByUser(user);
     }
 
+    public List<ReturnRequest> listAllRequests() {
+        return returnRequestRepository.findAll();
+    }
+
     public ReturnRequest updateStatus(Long requestId, String status) {
         ReturnRequest request = returnRequestRepository.findById(requestId).orElseThrow(() -> new IllegalArgumentException("Return request not found"));
         request.setStatus(status);
         request.setResolvedAt(Instant.now());
+        Order order = request.getOrder();
+        if ("APPROVED".equalsIgnoreCase(status)) {
+            order.setStatus("RETURN_APPROVED");
+        } else if ("REJECTED".equalsIgnoreCase(status)) {
+            order.setStatus("RETURN_REJECTED");
+        } else if ("COMPLETED".equalsIgnoreCase(status)) {
+            order.setStatus("RETURNED");
+        }
+        orderRepository.save(order);
         return returnRequestRepository.save(request);
     }
 }

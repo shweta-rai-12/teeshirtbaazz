@@ -1,42 +1,80 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import api from '../services/api';
 
 function Cart() {
   const [cart, setCart] = useState(null);
   const [message, setMessage] = useState('');
 
-  useEffect(() => {
+  const loadCart = () => {
     api.get('/cart')
       .then((resp) => setCart(resp.data))
       .catch(() => setMessage('Unable to load cart.'));
-  }, []);
+  };
 
-  const handleRemove = async (id) => {
+  useEffect(loadCart, []);
+
+  const updateQuantity = async (itemId, quantity) => {
     try {
-      const resp = await api.delete(`/cart/remove/${id}`);
+      const resp = await api.put('/cart/update', { productId: itemId, quantity: Number(quantity) });
       setCart(resp.data);
     } catch (err) {
-      setMessage('Unable to remove item');
+      setMessage(err.response?.data?.message || 'Unable to update item.');
     }
   };
 
+  const removeItem = async (id) => {
+    try {
+      const resp = await api.delete(`/cart/remove/${id}`);
+      setCart(resp.data);
+    } catch {
+      setMessage('Unable to remove item.');
+    }
+  };
+
+  const clearCart = async () => {
+    const resp = await api.delete('/cart/clear');
+    setCart(resp.data);
+  };
+
+  const items = cart?.items || [];
+
   return (
     <section className="page">
-      <h2>Your Cart</h2>
-      {message && <div className="notice">{message}</div>}
-      {cart?.items?.length ? (
-        <div className="cart-list">
-          {cart.items.map((item) => (
-            <div key={item.id} className="cart-item">
-              <div>{item.product.name}</div>
-              <div>Qty: {item.quantity}</div>
-              <div>${(item.product.price * item.quantity).toFixed(2)}</div>
-              <button onClick={() => handleRemove(item.id)}>Remove</button>
-            </div>
-          ))}
+      <div className="page-header">
+        <div>
+          <h1>Your Cart</h1>
+          <p>Review quantities before checkout.</p>
         </div>
+        {items.length > 0 && <button className="secondary" onClick={clearCart}>Clear Cart</button>}
+      </div>
+      {message && <div className="notice">{message}</div>}
+      {items.length ? (
+        <>
+          <div className="cart-list">
+            {items.map((item) => (
+              <div key={item.id} className="cart-item">
+                <div>
+                  <strong>{item.product.name}</strong>
+                  <p className="muted">{item.product.color} | {item.product.size}</p>
+                </div>
+                <input className="qty-input" type="number" min="1" max={item.product.stock} value={item.quantity} onChange={(e) => updateQuantity(item.id, e.target.value)} />
+                <div>Rs {item.lineTotal?.toFixed(2)}</div>
+                <button className="secondary" onClick={() => removeItem(item.id)}>Remove</button>
+              </div>
+            ))}
+          </div>
+          <div className="summary-row">
+            <strong>Total</strong>
+            <strong>Rs {cart.totalAmount?.toFixed(2)}</strong>
+          </div>
+          <Link className="button" to="/checkout">Checkout</Link>
+        </>
       ) : (
-        <p>Your cart is empty.</p>
+        <div className="empty-state">
+          <p>Your cart is empty.</p>
+          <Link className="button" to="/products">Browse Products</Link>
+        </div>
       )}
     </section>
   );

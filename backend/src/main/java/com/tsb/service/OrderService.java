@@ -7,6 +7,7 @@ import com.tsb.repository.CartRepository;
 import com.tsb.repository.OrderRepository;
 import com.tsb.repository.ProductRepository;
 import com.tsb.repository.UserRepository;
+import com.tsb.repository.AddressRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,17 +21,20 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final CartItemRepository cartItemRepository;
     private final ProductRepository productRepository;
+    private final AddressRepository addressRepository;
 
     public OrderService(UserRepository userRepository,
                         CartRepository cartRepository,
                         OrderRepository orderRepository,
                         CartItemRepository cartItemRepository,
-                        ProductRepository productRepository) {
+                        ProductRepository productRepository,
+                        AddressRepository addressRepository) {
         this.userRepository = userRepository;
         this.cartRepository = cartRepository;
         this.orderRepository = orderRepository;
         this.cartItemRepository = cartItemRepository;
         this.productRepository = productRepository;
+        this.addressRepository = addressRepository;
     }
 
     @Transactional
@@ -43,7 +47,7 @@ public class OrderService {
         Order order = new Order();
         order.setUser(user);
         order.setStatus("PENDING");
-        order.setShippingAddress(request.getShippingAddress());
+        order.setShippingAddress(resolveShippingAddress(user, request));
         order.setCreatedAt(Instant.now());
         order.setUpdatedAt(Instant.now());
 
@@ -80,8 +84,21 @@ public class OrderService {
         return orderRepository.findByUser(user);
     }
 
+    public List<Order> listAllOrders() {
+        return orderRepository.findAll();
+    }
+
     public Order getOrder(Long orderId) {
         return orderRepository.findById(orderId).orElseThrow(() -> new IllegalArgumentException("Order not found"));
+    }
+
+    public Order getOrderForUser(String userEmail, Long orderId) {
+        User user = userRepository.findByEmail(userEmail).orElseThrow(() -> new IllegalArgumentException("User not found"));
+        Order order = getOrder(orderId);
+        if (!order.getUser().getId().equals(user.getId()) && user.getRole() != Role.ROLE_ADMIN) {
+            throw new IllegalArgumentException("Order not found");
+        }
+        return order;
     }
 
     public Order updateStatus(Long orderId, String status) {
@@ -89,5 +106,17 @@ public class OrderService {
         order.setStatus(status);
         order.setUpdatedAt(Instant.now());
         return orderRepository.save(order);
+    }
+
+    private String resolveShippingAddress(User user, OrderRequest request) {
+        if (request.getAddressId() != null) {
+            return addressRepository.findByIdAndUser(request.getAddressId(), user)
+                    .orElseThrow(() -> new IllegalArgumentException("Address not found"))
+                    .toShippingSnapshot();
+        }
+        if (request.getShippingAddress() == null || request.getShippingAddress().isBlank()) {
+            throw new IllegalArgumentException("Shipping address is required");
+        }
+        return request.getShippingAddress();
     }
 }

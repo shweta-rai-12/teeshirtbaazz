@@ -3,6 +3,7 @@ package com.tsb.dto;
 public class PaymentRequest {
     private Long orderId;
     private String method;
+    private Boolean simulateFailure;
 
     public PaymentRequest() {
     }
@@ -21,5 +22,13 @@ public class PaymentRequest {
 
     public void setMethod(String method) {
         this.method = method;
+    }
+
+    public Boolean getSimulateFailure() {
+        return simulateFailure;
+    }
+
+    public void setSimulateFailure(Boolean simulateFailure) {
+        this.simulateFailure = simulateFailure;
     }
 }

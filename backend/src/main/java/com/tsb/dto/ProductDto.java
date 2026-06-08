@@ -4,12 +4,14 @@ public class ProductDto {
     private Long id;
     private String name;
     private String category;
+    private String ageGroup;
     private String color;
     private String size;
     private String description;
     private String imageUrl;
     private Double price;
     private Integer stock;
+    private Boolean active;
 
     public ProductDto() {
     }
@@ -36,6 +38,14 @@ public class ProductDto {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public String getAgeGroup() {
+        return ageGroup;
+    }
+
+    public void setAgeGroup(String ageGroup) {
+        this.ageGroup = ageGroup;
     }
 
     public String getColor() {
@@ -84,5 +94,13 @@ public class ProductDto {
 
     public void setStock(Integer stock) {
         this.stock = stock;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 }

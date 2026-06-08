@@ -11,8 +11,6 @@ import com.tsb.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
 @Service
 public class CartService {
     private final CartRepository cartRepository;
@@ -45,10 +43,16 @@ public class CartService {
         if (quantity < 1) {
             throw new IllegalArgumentException("Quantity must be at least 1");
         }
+        if (product.getStock() < quantity) {
+            throw new IllegalArgumentException("Only " + product.getStock() + " items are in stock");
+        }
         CartItem existing = cart.getItems().stream()
                 .filter(item -> item.getProduct().getId().equals(productId))
                 .findFirst().orElse(null);
         if (existing != null) {
+            if (product.getStock() < existing.getQuantity() + quantity) {
+                throw new IllegalArgumentException("Only " + product.getStock() + " items are in stock");
+            }
             existing.setQuantity(existing.getQuantity() + quantity);
             cartItemRepository.save(existing);
         } else {
@@ -68,6 +72,9 @@ public class CartService {
         if (quantity < 1) {
             throw new IllegalArgumentException("Quantity must be at least 1");
         }
+        if (item.getProduct().getStock() < quantity) {
+            throw new IllegalArgumentException("Only " + item.getProduct().getStock() + " items are in stock");
+        }
         item.setQuantity(quantity);
         cartItemRepository.save(item);
         return cart;
@@ -82,5 +89,13 @@ public class CartService {
         cart.getItems().remove(item);
         cartItemRepository.delete(item);
         return cart;
+    }
+
+    @Transactional
+    public Cart clearCart(String userEmail) {
+        Cart cart = getCart(userEmail);
+        cartItemRepository.deleteAll(cart.getItems());
+        cart.getItems().clear();
+        return cartRepository.save(cart);
     }
 }

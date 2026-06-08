@@ -4,6 +4,7 @@ public class CustomOrderRequest {
     private String desiredSize;
     private String desiredColor;
     private String logoUrl;
+    private String requestedText;
     private String notes;
     private Double estimatedPrice;
 
@@ -32,6 +33,14 @@ public class CustomOrderRequest {
 
     public void setLogoUrl(String logoUrl) {
         this.logoUrl = logoUrl;
+    }
+
+    public String getRequestedText() {
+        return requestedText;
+    }
+
+    public void setRequestedText(String requestedText) {
+        this.requestedText = requestedText;
     }
 
     public String getNotes() {

@@ -1,5 +1,6 @@
 package com.tsb.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.time.Instant;
 
@@ -11,11 +12,15 @@ public class CustomOrder {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @JsonIgnore
     private User user;
 
     private String desiredSize;
     private String desiredColor;
     private String logoUrl;
+    @Column(length = 1000)
+    private String requestedText;
+    @Column(length = 1000)
     private String notes;
     private String status;
     private Double estimatedPrice;
@@ -58,6 +63,14 @@ public class CustomOrder {
 
     public void setLogoUrl(String logoUrl) {
         this.logoUrl = logoUrl;
+    }
+
+    public String getRequestedText() {
+        return requestedText;
+    }
+
+    public void setRequestedText(String requestedText) {
+        this.requestedText = requestedText;
     }
 
     public String getNotes() {

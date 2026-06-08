@@ -32,8 +32,9 @@ public class OrderController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Order> getOrder(@PathVariable Long id) {
-        return ResponseEntity.ok(orderService.getOrder(id));
+    public ResponseEntity<Order> getOrder(@AuthenticationPrincipal UserDetails user,
+                                          @PathVariable Long id) {
+        return ResponseEntity.ok(orderService.getOrderForUser(user.getUsername(), id));
     }
 
     @PutMapping("/{id}/status")

@@ -27,6 +27,7 @@ public class CustomOrderService {
         customOrder.setDesiredSize(request.getDesiredSize());
         customOrder.setDesiredColor(request.getDesiredColor());
         customOrder.setLogoUrl(request.getLogoUrl());
+        customOrder.setRequestedText(request.getRequestedText());
         customOrder.setNotes(request.getNotes());
         customOrder.setEstimatedPrice(request.getEstimatedPrice());
         customOrder.setStatus("SUBMITTED");
@@ -37,6 +38,10 @@ public class CustomOrderService {
     public List<CustomOrder> listRequests(String userEmail) {
         User user = userRepository.findByEmail(userEmail).orElseThrow(() -> new IllegalArgumentException("User not found"));
         return customOrderRepository.findByUser(user);
+    }
+
+    public List<CustomOrder> listAllRequests() {
+        return customOrderRepository.findAll();
     }
 
     public CustomOrder updateStatus(Long id, String status) {

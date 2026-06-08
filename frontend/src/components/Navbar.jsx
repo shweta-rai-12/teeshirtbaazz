@@ -1,8 +1,10 @@
 import { Link, useNavigate } from 'react-router-dom';
+import { getSessionUser } from '../services/api';
 
 function Navbar() {
   const navigate = useNavigate();
   const token = localStorage.getItem('tsb_token');
+  const user = getSessionUser();
   const handleLogout = () => {
     localStorage.clear();
     navigate('/login');
@@ -16,8 +18,11 @@ function Navbar() {
         <Link to="/products">Products</Link>
         <Link to="/cart">Cart</Link>
         <Link to="/orders">Orders</Link>
+        <Link to="/returns">Returns</Link>
         <Link to="/custom-order">Custom Order</Link>
         <Link to="/chat">Chat</Link>
+        {token && <Link to="/profile">Profile</Link>}
+        {user?.role === 'ROLE_ADMIN' && <Link to="/admin">Admin</Link>}
         {token ? (
           <button onClick={handleLogout}>Logout</button>
         ) : (

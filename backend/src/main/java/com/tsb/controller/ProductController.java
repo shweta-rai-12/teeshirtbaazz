@@ -18,8 +18,15 @@ public class ProductController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Product>> listProducts() {
-        return ResponseEntity.ok(productService.listProducts());
+    public ResponseEntity<List<Product>> listProducts(@RequestParam(required = false) String search,
+                                                      @RequestParam(required = false) String category,
+                                                      @RequestParam(required = false) String size,
+                                                      @RequestParam(required = false) String color,
+                                                      @RequestParam(required = false) String ageGroup,
+                                                      @RequestParam(required = false) Double minPrice,
+                                                      @RequestParam(required = false) Double maxPrice,
+                                                      @RequestParam(required = false) String sort) {
+        return ResponseEntity.ok(productService.listProducts(search, category, size, color, ageGroup, minPrice, maxPrice, sort));
     }
 
     @GetMapping("/{id}")
@@ -39,12 +46,14 @@ public class ProductController {
         Product existing = productService.getProduct(id);
         existing.setName(product.getName());
         existing.setCategory(product.getCategory());
+        existing.setAgeGroup(product.getAgeGroup());
         existing.setColor(product.getColor());
         existing.setSize(product.getSize());
         existing.setDescription(product.getDescription());
         existing.setImageUrl(product.getImageUrl());
         existing.setPrice(product.getPrice());
         existing.setStock(product.getStock());
+        existing.setActive(product.getActive());
         return ResponseEntity.ok(productService.saveProduct(existing));
     }
 

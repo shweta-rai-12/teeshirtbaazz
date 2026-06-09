@@ -27,6 +27,15 @@ function ProductDetail() {
     }
   };
 
+  const updateQuantity = (value) => {
+    const nextValue = Number(value);
+    if (!Number.isFinite(nextValue)) {
+      setQuantity(1);
+      return;
+    }
+    setQuantity(Math.max(1, Math.min(nextValue, product.stock || 1)));
+  };
+
   if (!product) {
     return <section className="page">{message || 'Loading product...'}</section>;
   }
@@ -40,9 +49,9 @@ function ProductDetail() {
         <p className="muted">{product.category} | {product.ageGroup || 'Adult'} | {product.color} | {product.size}</p>
         <p className="price">Rs {product.price?.toFixed(2)}</p>
         <p>{product.description}</p>
-        <p className={product.stock > 0 ? 'stock' : 'error-text'}>{product.stock > 0 ? `${product.stock} pieces available` : 'Out of stock'}</p>
+        <p className={product.stock > 0 ? 'stock' : 'error-text'}>{product.stock > 0 ? `${product.stock} pieces available${product.stock <= 5 ? ' - low stock' : ''}` : 'Out of stock'}</p>
         <label>Quantity</label>
-        <input className="small-input" type="number" min="1" max={product.stock || 1} value={quantity} onChange={(e) => setQuantity(Number(e.target.value))} />
+        <input className="small-input" type="number" min="1" max={product.stock || 1} value={quantity} onChange={(e) => updateQuantity(e.target.value)} />
         <div className="actions">
           <button disabled={!product.stock} onClick={addToCart}>Add to Cart</button>
           <Link className="button secondary" to="/custom-order">Request Custom Tee</Link>

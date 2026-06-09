@@ -18,3 +18,4 @@ jwt:
 app:
   cors:
     allowed-origins: ${FRONTEND_ORIGIN:http://localhost:5173}
+  upload-dir: ${UPLOAD_DIR:uploads}

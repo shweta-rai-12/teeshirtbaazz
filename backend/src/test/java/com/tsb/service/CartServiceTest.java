@@ -39,4 +39,29 @@ class CartServiceTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("in stock");
     }
+
+    @Test
+    void rejectsInactiveProductWhenAddingToCart() {
+        CartRepository cartRepository = mock(CartRepository.class);
+        CartItemRepository cartItemRepository = mock(CartItemRepository.class);
+        ProductRepository productRepository = mock(ProductRepository.class);
+        UserRepository userRepository = mock(UserRepository.class);
+        CartService service = new CartService(cartRepository, cartItemRepository, productRepository, userRepository);
+
+        User user = new User("Shopper", "shopper@example.com", "hash", com.tsb.model.Role.ROLE_USER);
+        Product product = new Product();
+        product.setName("Hidden Tee");
+        product.setStock(5);
+        product.setPrice(499.0);
+        product.setActive(false);
+
+        when(userRepository.findByEmail("shopper@example.com")).thenReturn(Optional.of(user));
+        when(cartRepository.findByUser(user)).thenReturn(Optional.empty());
+        when(cartRepository.save(any())).thenAnswer(invocation -> invocation.getArgument(0));
+        when(productRepository.findById(10L)).thenReturn(Optional.of(product));
+
+        assertThatThrownBy(() -> service.addItem("shopper@example.com", 10L, 1))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("not available");
+    }
 }

@@ -32,8 +32,11 @@ function Admin() {
   const [productForm, setProductForm] = useState(productDefaults);
   const [faqForm, setFaqForm] = useState(faqDefaults);
   const [message, setMessage] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [working, setWorking] = useState(false);
 
   const load = () => {
+    setLoading(true);
     Promise.all([
       api.get('/admin/products'),
       api.get('/admin/orders'),
@@ -46,66 +49,97 @@ function Admin() {
       setReturns(returnResp.data);
       setCustomOrders(customResp.data);
       setFaqs(faqResp.data);
-    }).catch((err) => setMessage(err.response?.data?.message || 'Unable to load admin data.'));
+    }).catch((err) => setMessage(err.response?.data?.message || 'Unable to load admin data.'))
+      .finally(() => setLoading(false));
   };
 
   useEffect(load, []);
 
   const saveProduct = async (event) => {
     event.preventDefault();
-    const payload = {
-      ...productForm,
-      price: Number(productForm.price),
-      stock: Number(productForm.stock),
-    };
-    if (productForm.id) {
-      await api.put(`/products/${productForm.id}`, payload);
-      setMessage('Product updated.');
-    } else {
-      await api.post('/products', payload);
-      setMessage('Product created.');
+    setWorking(true);
+    try {
+      const payload = {
+        ...productForm,
+        price: Number(productForm.price),
+        stock: Number(productForm.stock),
+      };
+      if (productForm.id) {
+        await api.put(`/products/${productForm.id}`, payload);
+        setMessage('Product updated.');
+      } else {
+        await api.post('/products', payload);
+        setMessage('Product created.');
+      }
+      setProductForm(productDefaults);
+      load();
+    } catch (err) {
+      setMessage(err.response?.data?.message || 'Unable to save product.');
+    } finally {
+      setWorking(false);
     }
-    setProductForm(productDefaults);
-    load();
   };
 
   const deleteProduct = async (id) => {
-    await api.delete(`/products/${id}`);
-    setMessage('Product deleted.');
-    load();
+    setWorking(true);
+    try {
+      await api.delete(`/products/${id}`);
+      setMessage('Product deleted.');
+      load();
+    } catch (err) {
+      setMessage(err.response?.data?.message || 'Unable to delete product.');
+    } finally {
+      setWorking(false);
+    }
   };
 
   const updateOrderStatus = async (id, status) => {
-    await api.put(`/orders/${id}/status?status=${encodeURIComponent(status)}`);
-    load();
+    await runAdminAction(() => api.put(`/orders/${id}/status?status=${encodeURIComponent(status)}`), 'Order status updated.');
   };
 
   const updateReturnStatus = async (id, status) => {
-    await api.put(`/returns/${id}?status=${encodeURIComponent(status)}`);
-    load();
+    await runAdminAction(() => api.put(`/returns/${id}?status=${encodeURIComponent(status)}`), 'Return status updated.');
   };
 
   const updateCustomStatus = async (id, status) => {
-    await api.put(`/custom-orders/${id}?status=${encodeURIComponent(status)}`);
-    load();
+    await runAdminAction(() => api.put(`/custom-orders/${id}?status=${encodeURIComponent(status)}`), 'Custom request status updated.');
   };
 
   const saveFaq = async (event) => {
     event.preventDefault();
-    if (faqForm.id) {
-      await api.put(`/admin/faqs/${faqForm.id}`, faqForm);
-      setMessage('FAQ updated.');
-    } else {
-      await api.post('/admin/faqs', faqForm);
-      setMessage('FAQ created.');
+    setWorking(true);
+    try {
+      if (faqForm.id) {
+        await api.put(`/admin/faqs/${faqForm.id}`, faqForm);
+        setMessage('FAQ updated.');
+      } else {
+        await api.post('/admin/faqs', faqForm);
+        setMessage('FAQ created.');
+      }
+      setFaqForm(faqDefaults);
+      load();
+    } catch (err) {
+      setMessage(err.response?.data?.message || 'Unable to save FAQ.');
+    } finally {
+      setWorking(false);
     }
-    setFaqForm(faqDefaults);
-    load();
   };
 
   const deleteFaq = async (id) => {
-    await api.delete(`/admin/faqs/${id}`);
-    load();
+    await runAdminAction(() => api.delete(`/admin/faqs/${id}`), 'FAQ deleted.');
+  };
+
+  const runAdminAction = async (action, successMessage) => {
+    setWorking(true);
+    try {
+      await action();
+      setMessage(successMessage);
+      load();
+    } catch (err) {
+      setMessage(err.response?.data?.message || 'Admin action failed.');
+    } finally {
+      setWorking(false);
+    }
   };
 
   return (
@@ -117,6 +151,15 @@ function Admin() {
         </div>
       </div>
       {message && <div className="notice">{message}</div>}
+      {loading && <div className="empty-state">Loading admin workspace...</div>}
+
+      <div className="stats-grid">
+        <div className="stat"><strong>{products.length}</strong><span>Products</span></div>
+        <div className="stat"><strong>{orders.length}</strong><span>Orders</span></div>
+        <div className="stat"><strong>{returns.length}</strong><span>Returns</span></div>
+        <div className="stat"><strong>{customOrders.length}</strong><span>Custom</span></div>
+        <div className="stat"><strong>{faqs.length}</strong><span>FAQs</span></div>
+      </div>
 
       <div className="admin-grid">
         <form className="panel" onSubmit={saveProduct}>
@@ -148,7 +191,7 @@ function Admin() {
             Active
           </label>
           <div className="actions">
-            <button>{productForm.id ? 'Update' : 'Create'}</button>
+            <button disabled={working}>{productForm.id ? 'Update' : 'Create'}</button>
             {productForm.id && <button type="button" className="secondary" onClick={() => setProductForm(productDefaults)}>Cancel</button>}
           </div>
         </form>
@@ -163,7 +206,7 @@ function Admin() {
               </div>
               <div className="actions">
                 <button className="secondary" onClick={() => setProductForm({ ...product, price: String(product.price), stock: String(product.stock) })}>Edit</button>
-                <button className="danger" onClick={() => deleteProduct(product.id)}>Delete</button>
+                <button className="danger" disabled={working} onClick={() => deleteProduct(product.id)}>Delete</button>
               </div>
             </article>
           ))}
@@ -183,6 +226,7 @@ function Admin() {
               <option>SHIPPED</option>
               <option>DELIVERED</option>
               <option>CANCELLED</option>
+              <option>PAYMENT_FAILED</option>
             </select>
           </article>
         ))}
@@ -230,7 +274,7 @@ function Admin() {
             <input type="checkbox" checked={faqForm.active} onChange={(e) => setFaqForm({ ...faqForm, active: e.target.checked })} />
             Active
           </label>
-          <button>{faqForm.id ? 'Update FAQ' : 'Create FAQ'}</button>
+          <button disabled={working}>{faqForm.id ? 'Update FAQ' : 'Create FAQ'}</button>
         </form>
         <div>
           <h2>FAQ Content</h2>

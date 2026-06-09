@@ -18,7 +18,11 @@ public class ChatService {
             "payment", "We support UPI, card, and cash on delivery payment methods.",
             "custom", "Custom orders are reviewed by our team, and you will receive a confirmation soon.",
             "size", "Check product sizes from S to XXL. If unsure, choose your regular t-shirt size.",
-            "order", "You can track your order from the Orders page after checkout."
+            "order", "You can track your order from the Orders page after checkout.",
+            "track", "Open Orders to see confirmation, shipping, delivery, and return statuses.",
+            "refund", "Refund status is handled after an approved return is completed.",
+            "stock", "Stock is shown on product cards and checked again during checkout.",
+            "cancel", "For this MVP, admin can cancel orders before fulfillment from the admin workspace."
     );
 
     public ChatService(FaqItemRepository faqItemRepository) {

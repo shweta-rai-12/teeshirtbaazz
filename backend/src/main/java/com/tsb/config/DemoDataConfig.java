@@ -37,6 +37,18 @@ public class DemoDataConfig {
                 productRepository.save(product("Premium Polo T-Shirt", "Men", "Adult", "Navy", "XL", 999.0, 12,
                         "Collared t-shirt with premium pique texture for smarter casual wear.",
                         "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?auto=format&fit=crop&w=800&q=80"));
+                productRepository.save(product("Minimal White Crew", "Women", "Adult", "White", "S", 549.0, 22,
+                        "Clean white crew-neck t-shirt designed for layering and daily wear.",
+                        "https://images.unsplash.com/photo-1554568218-0f1715e72254?auto=format&fit=crop&w=800&q=80"));
+                productRepository.save(product("Streetwear Boxy Tee", "Men", "Adult", "Olive", "L", 899.0, 7,
+                        "Boxy fit t-shirt with heavyweight fabric and a streetwear silhouette.",
+                        "https://images.unsplash.com/photo-1503341504253-dff4815485f1?auto=format&fit=crop&w=800&q=80"));
+                productRepository.save(product("Kids Rainbow Tee", "Kids", "Kids", "Yellow", "M", 399.0, 0,
+                        "Bright kids t-shirt included to demonstrate out-of-stock catalog behavior.",
+                        "https://images.unsplash.com/photo-1503919545889-aef636e10ad4?auto=format&fit=crop&w=800&q=80"));
+                productRepository.save(product("Custom Ready Plain Tee", "Men", "Adult", "Maroon", "XXL", 699.0, 16,
+                        "Plain t-shirt prepared for custom text, logo, and event printing requests.",
+                        "https://images.unsplash.com/photo-1562157873-818bc0726f68?auto=format&fit=crop&w=800&q=80"));
             }
 
             if (faqItemRepository.count() == 0) {

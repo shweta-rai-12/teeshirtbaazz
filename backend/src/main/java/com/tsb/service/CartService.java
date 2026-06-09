@@ -38,25 +38,23 @@ public class CartService {
 
     @Transactional
     public Cart addItem(String userEmail, Long productId, Integer quantity) {
+        if (productId == null) {
+            throw new IllegalArgumentException("Product is required");
+        }
         Cart cart = getCart(userEmail);
         Product product = productRepository.findById(productId).orElseThrow(() -> new IllegalArgumentException("Product not found"));
-        if (quantity < 1) {
-            throw new IllegalArgumentException("Quantity must be at least 1");
-        }
-        if (product.getStock() < quantity) {
-            throw new IllegalArgumentException("Only " + product.getStock() + " items are in stock");
-        }
+        validatePurchasableProduct(product);
+        int requestedQuantity = validQuantity(quantity);
+        ensureStock(product, requestedQuantity);
         CartItem existing = cart.getItems().stream()
                 .filter(item -> item.getProduct().getId().equals(productId))
                 .findFirst().orElse(null);
         if (existing != null) {
-            if (product.getStock() < existing.getQuantity() + quantity) {
-                throw new IllegalArgumentException("Only " + product.getStock() + " items are in stock");
-            }
-            existing.setQuantity(existing.getQuantity() + quantity);
+            ensureStock(product, existing.getQuantity() + requestedQuantity);
+            existing.setQuantity(existing.getQuantity() + requestedQuantity);
             cartItemRepository.save(existing);
         } else {
-            CartItem item = new CartItem(cart, product, quantity);
+            CartItem item = new CartItem(cart, product, requestedQuantity);
             cart.getItems().add(item);
             cartItemRepository.save(item);
         }
@@ -65,17 +63,20 @@ public class CartService {
 
     @Transactional
     public Cart updateItem(String userEmail, Long itemId, Integer quantity) {
+        if (itemId == null) {
+            throw new IllegalArgumentException("Cart item is required");
+        }
         Cart cart = getCart(userEmail);
         CartItem item = cart.getItems().stream()
                 .filter(cartItem -> cartItem.getId().equals(itemId))
                 .findFirst().orElseThrow(() -> new IllegalArgumentException("Cart item not found"));
-        if (quantity < 1) {
-            throw new IllegalArgumentException("Quantity must be at least 1");
-        }
-        if (item.getProduct().getStock() < quantity) {
-            throw new IllegalArgumentException("Only " + item.getProduct().getStock() + " items are in stock");
-        }
-        item.setQuantity(quantity);
+        Product product = productRepository.findById(item.getProduct().getId())
+                .orElseThrow(() -> new IllegalArgumentException("Product not found"));
+        validatePurchasableProduct(product);
+        int requestedQuantity = validQuantity(quantity);
+        ensureStock(product, requestedQuantity);
+        item.setProduct(product);
+        item.setQuantity(requestedQuantity);
         cartItemRepository.save(item);
         return cart;
     }
@@ -97,5 +98,27 @@ public class CartService {
         cartItemRepository.deleteAll(cart.getItems());
         cart.getItems().clear();
         return cartRepository.save(cart);
+    }
+
+    private int validQuantity(Integer quantity) {
+        if (quantity == null || quantity < 1) {
+            throw new IllegalArgumentException("Quantity must be at least 1");
+        }
+        return quantity;
+    }
+
+    private void validatePurchasableProduct(Product product) {
+        if (Boolean.FALSE.equals(product.getActive())) {
+            throw new IllegalArgumentException("Product is not available");
+        }
+        if (product.getStock() == null || product.getStock() <= 0) {
+            throw new IllegalArgumentException("Product is out of stock");
+        }
+    }
+
+    private void ensureStock(Product product, int quantity) {
+        if (product.getStock() < quantity) {
+            throw new IllegalArgumentException("Only " + product.getStock() + " items are in stock");
+        }
     }
 }

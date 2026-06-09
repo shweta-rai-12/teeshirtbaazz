@@ -8,6 +8,7 @@ TeeShirtBazz is a full-stack t-shirt e-commerce platform with secure authenticat
 - Cart, checkout, saved addresses, order confirmation, and payment simulation.
 - Order tracking and return request workflow.
 - Admin workspace for products, stock, orders, returns, FAQs, and custom requests.
+- Custom t-shirt requests with logo upload or logo URL.
 - Rule-based FAQ chatbot backed by editable FAQ content.
 
 ## Setup
@@ -52,3 +53,14 @@ The admin account and demo products are seeded automatically on a fresh database
 
 ## Project Plan
 See `docs/projectPlan.md` for the 10-day roadmap, APIs, database entities, testing plan, deployment plan, and tooling notes.
+
+## Deployment And Demo
+- Deployment notes: `docs/deployment.md`
+- Demo checklist: `docs/demoChecklist.md`
+
+## Verification Commands
+```bash
+cd backend && mvn test package
+cd ../frontend && npm install && npm run build
+cd .. && docker compose up --build
+```

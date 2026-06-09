@@ -9,6 +9,11 @@ services:
       - "3306:3306"
     volumes:
       - mysql-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-pexample"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
 
   backend:
     build:
@@ -21,8 +26,12 @@ services:
       SPRING_DATASOURCE_PASSWORD: example
       JWT_SECRET: SuperSecretJwtKeyForTeeShirtBazz
       FRONTEND_ORIGIN: http://localhost:5173
+      UPLOAD_DIR: /app/uploads
+    volumes:
+      - upload-data:/app/uploads
     depends_on:
-      - mysql
+      mysql:
+        condition: service_healthy
 
   frontend:
     build:
@@ -34,3 +43,4 @@ services:
 
 volumes:
   mysql-data:
+  upload-data:

@@ -31,7 +31,8 @@ public class CartController {
     @PutMapping("/update")
     public ResponseEntity<Cart> updateItem(@AuthenticationPrincipal UserDetails user,
                                            @RequestBody CartItemRequest request) {
-        return ResponseEntity.ok(cartService.updateItem(user.getUsername(), request.getProductId(), request.getQuantity()));
+        Long itemId = request.getItemId() != null ? request.getItemId() : request.getProductId();
+        return ResponseEntity.ok(cartService.updateItem(user.getUsername(), itemId, request.getQuantity()));
     }
 
     @DeleteMapping("/remove/{id}")

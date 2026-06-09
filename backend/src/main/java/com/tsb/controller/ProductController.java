@@ -7,6 +7,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/products")
@@ -25,13 +26,19 @@ public class ProductController {
                                                       @RequestParam(required = false) String ageGroup,
                                                       @RequestParam(required = false) Double minPrice,
                                                       @RequestParam(required = false) Double maxPrice,
-                                                      @RequestParam(required = false) String sort) {
-        return ResponseEntity.ok(productService.listProducts(search, category, size, color, ageGroup, minPrice, maxPrice, sort));
+                                                      @RequestParam(required = false) String sort,
+                                                      @RequestParam(required = false) Boolean inStockOnly) {
+        return ResponseEntity.ok(productService.listProducts(search, category, size, color, ageGroup, minPrice, maxPrice, sort, inStockOnly));
+    }
+
+    @GetMapping("/filters")
+    public ResponseEntity<Map<String, List<String>>> filters() {
+        return ResponseEntity.ok(productService.catalogOptions());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Product> getProduct(@PathVariable Long id) {
-        return ResponseEntity.ok(productService.getProduct(id));
+        return ResponseEntity.ok(productService.getActiveProduct(id));
     }
 
     @PostMapping

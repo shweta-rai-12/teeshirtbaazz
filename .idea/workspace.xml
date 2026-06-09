@@ -4,13 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b3e265b0-d595-466b-9d28-e9cea94af541" name="Changes" comment="Structure of the project">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/tsb/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/tsb/config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/tsb/service/AddressService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/tsb/service/AddressService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/Profile.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/Profile.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/services/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/services/api.js" afterDir="false" />
-    </list>
+    <list default="true" id="b3e265b0-d595-466b-9d28-e9cea94af541" name="Changes" comment="Structure of the project" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -186,7 +180,7 @@
       <workItem from="1778929271463" duration="2782000" />
       <workItem from="1778947732377" duration="2030000" />
       <workItem from="1779359962766" duration="3775000" />
-      <workItem from="1780915863205" duration="3582000" />
+      <workItem from="1780915863205" duration="3907000" />
     </task>
     <task id="LOCAL-00001" summary="Structure of the project">
       <option name="closed" value="true" />
@@ -220,7 +214,15 @@
       <option name="project" value="LOCAL" />
       <updated>1780921784250</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Structure of the project">
+      <option name="closed" value="true" />
+      <created>1780922473248</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1780922473248</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

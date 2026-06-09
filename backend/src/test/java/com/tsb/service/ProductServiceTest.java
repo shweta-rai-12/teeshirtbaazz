@@ -21,7 +21,7 @@ class ProductServiceTest {
                 product("Hidden Tee", "Women", "Adult", "Pink", "L", 699.0, false)
         ));
 
-        List<Product> result = service.listProducts("classic", "Men", "M", "Black", "Adult", 100.0, 600.0, "price-asc");
+        List<Product> result = service.listProducts("classic", "Men", "M", "Black", "Adult", 100.0, 600.0, "price-asc", true);
 
         assertThat(result).hasSize(1);
         assertThat(result.get(0).getName()).isEqualTo("Classic Tee");

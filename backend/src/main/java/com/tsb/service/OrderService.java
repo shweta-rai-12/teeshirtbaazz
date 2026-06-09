@@ -53,8 +53,17 @@ public class OrderService {
 
         double total = 0;
         for (CartItem cartItem : cart.getItems()) {
-            Product product = productRepository.findById(cartItem.getProduct().getId())
+            if (cartItem.getQuantity() == null || cartItem.getQuantity() < 1) {
+                throw new IllegalArgumentException("Cart contains an invalid quantity");
+            }
+            Product product = productRepository.findLockedById(cartItem.getProduct().getId())
                     .orElseThrow(() -> new IllegalArgumentException("Product not found"));
+            if (Boolean.FALSE.equals(product.getActive())) {
+                throw new IllegalArgumentException("Product is no longer available: " + product.getName());
+            }
+            if (product.getStock() == null || product.getStock() <= 0) {
+                throw new IllegalArgumentException("Product is out of stock: " + product.getName());
+            }
             if (product.getStock() < cartItem.getQuantity()) {
                 throw new IllegalArgumentException("Insufficient stock for product: " + product.getName());
             }
@@ -95,7 +104,9 @@ public class OrderService {
     public Order getOrderForUser(String userEmail, Long orderId) {
         User user = userRepository.findByEmail(userEmail).orElseThrow(() -> new IllegalArgumentException("User not found"));
         Order order = getOrder(orderId);
-        if (!order.getUser().getId().equals(user.getId()) && user.getRole() != Role.ROLE_ADMIN) {
+        boolean sameUser = order.getUser().getId() != null && order.getUser().getId().equals(user.getId())
+                || order.getUser().getEmail().equalsIgnoreCase(user.getEmail());
+        if (!sameUser && user.getRole() != Role.ROLE_ADMIN) {
             throw new IllegalArgumentException("Order not found");
         }
         return order;
@@ -103,12 +114,19 @@ public class OrderService {
 
     public Order updateStatus(Long orderId, String status) {
         Order order = getOrder(orderId);
-        order.setStatus(status);
+        String nextStatus = status == null ? "" : status.toUpperCase();
+        if (!List.of("PENDING", "PAYMENT_FAILED", "CONFIRMED", "SHIPPED", "DELIVERED", "CANCELLED", "RETURN_APPROVED", "RETURN_REJECTED", "RETURNED").contains(nextStatus)) {
+            throw new IllegalArgumentException("Unsupported order status");
+        }
+        order.setStatus(nextStatus);
         order.setUpdatedAt(Instant.now());
         return orderRepository.save(order);
     }
 
     private String resolveShippingAddress(User user, OrderRequest request) {
+        if (request == null) {
+            throw new IllegalArgumentException("Shipping address is required");
+        }
         if (request.getAddressId() != null) {
             return addressRepository.findByIdAndUser(request.getAddressId(), user)
                     .orElseThrow(() -> new IllegalArgumentException("Address not found"))

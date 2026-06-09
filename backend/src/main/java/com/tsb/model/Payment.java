@@ -1,6 +1,7 @@
 package com.tsb.model;
 
 import jakarta.persistence.*;
+import java.time.Instant;
 
 @Entity
 public class Payment {
@@ -9,7 +10,7 @@ public class Payment {
     private Long id;
 
     @OneToOne
-    @JoinColumn(name = "order_id")
+    @JoinColumn(name = "order_id", unique = true)
     private Order order;
 
     private String method;
@@ -17,6 +18,8 @@ public class Payment {
     private String transactionId;
     private String failureReason;
     private Double amount;
+    private Instant createdAt;
+    private Instant updatedAt;
 
     public Payment() {
     }
@@ -71,5 +74,21 @@ public class Payment {
 
     public void setFailureReason(String failureReason) {
         this.failureReason = failureReason;
+    }
+
+    public Instant getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Instant createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Instant getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Instant updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }

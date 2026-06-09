@@ -148,6 +148,7 @@ textarea {
 .qty-input {
   width: 86px;
   margin: 0;
+  text-align: center;
 }
 
 .checkbox-row {
@@ -164,7 +165,7 @@ textarea {
 
 .toolbar {
   display: grid;
-  grid-template-columns: 1.5fr repeat(7, minmax(120px, 1fr));
+  grid-template-columns: 1.4fr repeat(7, minmax(120px, 1fr)) minmax(100px, 0.7fr);
   gap: 10px;
   align-items: center;
   margin-bottom: 18px;
@@ -173,6 +174,15 @@ textarea {
 .toolbar input,
 .toolbar select {
   margin: 0;
+}
+
+.compact-checkbox {
+  min-height: 40px;
+  margin: 0;
+  padding: 0 10px;
+  border: 1px solid #cdd8e2;
+  border-radius: 6px;
+  background: #fff;
 }
 
 .grid {
@@ -256,6 +266,23 @@ textarea {
   align-items: center;
 }
 
+.disabled-link {
+  pointer-events: none;
+  opacity: 0.55;
+}
+
+.quantity-control {
+  display: inline-grid;
+  grid-template-columns: 40px 72px 40px;
+  gap: 6px;
+  align-items: center;
+}
+
+.icon-button {
+  min-height: 38px;
+  padding: 0;
+}
+
 .actions.wrap {
   align-items: stretch;
   flex-wrap: wrap;
@@ -284,6 +311,13 @@ textarea {
 .error {
   background: #fdecec;
   color: #9f1d17;
+}
+
+.suggestion-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 14px 0;
 }
 
 .cart-list {
@@ -321,6 +355,82 @@ textarea {
   font-weight: 700;
 }
 
+.tracker {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  margin: 16px 0;
+}
+
+.tracker-step {
+  display: grid;
+  gap: 6px;
+  color: #7b8a9a;
+  font-size: 0.78rem;
+}
+
+.tracker-step span {
+  display: block;
+  height: 8px;
+  border-radius: 999px;
+  background: #d9e1e8;
+}
+
+.tracker-step.active {
+  color: #0f7a4f;
+  font-weight: 800;
+}
+
+.tracker-step.active span {
+  background: #0f7a4f;
+}
+
+.confirmation-banner {
+  background: #102030;
+  color: #fff;
+  border-radius: 8px;
+  padding: 24px;
+  margin-bottom: 18px;
+}
+
+.confirmation-banner .eyebrow {
+  color: #8bd7a8;
+}
+
+.logo-preview {
+  display: block;
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+  border: 1px solid #d9e1e8;
+  border-radius: 8px;
+  background: #fff;
+  margin-bottom: 12px;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(120px, 1fr));
+  gap: 12px;
+  margin: 18px 0;
+}
+
+.stat {
+  background: #fff;
+  border: 1px solid #d9e1e8;
+  border-radius: 8px;
+  padding: 14px;
+}
+
+.stat strong {
+  display: block;
+  font-size: 1.45rem;
+}
+
+.stat span {
+  color: #627386;
+}
+
 .detail-layout,
 .checkout-layout,
 .profile-layout,
@@ -353,6 +463,10 @@ textarea {
   margin: 0;
 }
 
+.compact-address {
+  margin-bottom: 14px;
+}
+
 .empty-state {
   background: #fff;
   border: 1px dashed #b9c7d3;
@@ -370,7 +484,8 @@ textarea {
   .checkout-layout,
   .profile-layout,
   .admin-grid,
-  .home-layout {
+  .home-layout,
+  .stats-grid {
     grid-template-columns: 1fr;
   }
 

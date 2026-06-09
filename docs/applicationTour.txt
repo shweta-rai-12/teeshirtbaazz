@@ -1,0 +1,179 @@
+TeeShirtBazz Application Tour
+=============================
+
+TeeShirtBazz is a full-stack t-shirt e-commerce web application focused only on t-shirts.
+Users can browse products, filter by size/color/category/price, add items to cart, place
+orders, make simulated payments, track orders, request returns, ask an FAQ chatbot, and
+submit custom t-shirt requests.
+
+It is designed as a portfolio-ready e-commerce project with both customer-facing and
+admin-facing workflows.
+
+
+Main Features
+=============
+
+Product Shopping
+----------------
+Users can browse t-shirts by category such as Men, Women, and Kids. The catalog supports
+filters for size, color, age group, price, stock availability, and sorting.
+
+Cart and Checkout
+-----------------
+Users can add products to cart, update quantities, remove items, clear the cart, and view
+the total price before checkout.
+
+Orders and Payments
+-------------------
+Users can place orders using a saved or newly entered shipping address. Payments are
+simulated for:
+
+- UPI
+- Card
+- Cash on Delivery
+
+The app generates payment reference IDs and supports success/failure simulation for demo
+purposes.
+
+Order Tracking
+--------------
+After checkout, users can view order confirmation and track order status such as confirmed,
+shipped, delivered, or return-related statuses.
+
+Return Requests
+---------------
+Users can request returns for eligible orders. Admins can approve, reject, or complete
+return requests.
+
+Custom T-Shirt Requests
+-----------------------
+Users can request custom t-shirts by choosing size/color, entering print text, writing
+design notes, and uploading or linking a logo/image.
+
+FAQ Chatbot
+-----------
+The app includes a simple FAQ chatbot for common questions about shipping, returns,
+payments, size help, order tracking, and custom t-shirts.
+
+
+User Roles
+==========
+
+Normal User
+-----------
+A normal user can:
+
+- Register and login
+- Browse and filter products
+- View product details
+- Add products to cart
+- Checkout and place orders
+- Use simulated payments
+- Track orders
+- Request returns
+- Submit custom t-shirt requests
+- Use the FAQ chatbot
+- Manage profile and saved addresses
+
+Admin
+-----
+An admin can:
+
+- Login using admin credentials
+- Add, edit, and delete products
+- Manage stock and product active status
+- View all orders
+- Update order status
+- View and manage return requests
+- Approve or reject custom t-shirt requests
+- Add, edit, and delete FAQ chatbot content
+
+
+Login Support
+=============
+
+The app supports both normal user login and admin login.
+
+A normal user gets access to shopping, cart, checkout, orders, returns, profile, chatbot,
+and custom request features.
+
+An admin gets extra access to the Admin Workspace, where they can manage products, orders,
+returns, FAQs, and custom t-shirt requests.
+
+Demo admin account assumption:
+
+Email: admin@teeshirtbazz.com
+Password: Admin@123
+
+
+Future Enhancements
+===================
+
+Useful features you can add later:
+
+- Real payment gateway integration such as Razorpay, Stripe, or PayU
+- Wishlist or save-for-later feature
+- Coupon codes and discounts
+- Product ratings and reviews
+- Order cancellation flow
+- Refund tracking after return approval
+- Email notifications for orders and returns
+- Invoice download as PDF
+- Admin analytics dashboard
+- S3/cloud storage for product and custom logo images
+
+
+How to Run with Docker
+======================
+
+Before running, your friend needs Docker Desktop installed and running.
+
+1. Clone the project
+--------------------
+
+git clone <your-repository-url>
+cd teeshirtbaazz
+
+2. Start the full application
+-----------------------------
+
+docker compose up --build
+
+This should start:
+
+- MySQL database
+- Spring Boot backend
+- React frontend served through Nginx
+
+3. Open the app
+---------------
+
+Frontend:
+http://localhost:5173
+
+Backend API:
+http://localhost:8080
+
+Swagger API docs:
+http://localhost:8080/swagger-ui/index.html
+
+4. Stop the app
+---------------
+
+docker compose down
+
+5. Reset database if needed
+---------------------------
+
+This removes saved database data:
+
+docker compose down -v
+docker compose up --build
+
+
+Assumptions
+===========
+
+The app currently uses simulated payments, not a real payment gateway. Custom logo uploads
+are stored locally through Docker volume storage. For production, cloud storage and real
+payment integration can be added later.
